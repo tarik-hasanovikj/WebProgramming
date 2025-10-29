@@ -2,12 +2,14 @@ package mk.ukim.finki.wp.lab;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 
 @SpringBootApplication
-public class LabaApplication {
+@ServletComponentScan
+public class LabAApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(LabaApplication.class, args);
+        SpringApplication.run(LabAApplication.class, args);
     }
 
 }
