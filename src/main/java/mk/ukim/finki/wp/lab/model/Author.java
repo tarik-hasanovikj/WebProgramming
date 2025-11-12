@@ -12,25 +12,25 @@ import lombok.NoArgsConstructor;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class BookReservation {
+public class Author {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String bookTitle;
+    private String name;
 
-    private String readerName;
+    private String surname;
 
-    private String readerAddress;
+    private String country;
 
-    private Long numberOfCopies;
+    private String biography;
 
-    public BookReservation(String bookTitle, String readerName, String readerAddress, Long numberOfCopies) {
+    public Author(String name, String surname, String country, String biography) {
         this.id = (long) (Math.random() * 1000);
-        this.bookTitle = bookTitle;
-        this.readerName = readerName;
-        this.readerAddress = readerAddress;
-        this.numberOfCopies = numberOfCopies;
+        this.name = name;
+        this.surname = surname;
+        this.country = country;
+        this.biography = biography;
     }
 }
