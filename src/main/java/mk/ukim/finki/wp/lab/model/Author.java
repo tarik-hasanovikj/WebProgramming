@@ -1,12 +1,10 @@
 package mk.ukim.finki.wp.lab.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import mk.ukim.finki.wp.lab.model.enums.Gender;
 
 @Data
 @Entity
@@ -26,11 +24,15 @@ public class Author {
 
     private String biography;
 
-    public Author(String name, String surname, String country, String biography) {
-        this.id = (long) (Math.random() * 1000);
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+
+    public Author(String name, String surname, String country, String biography, Gender gender) {
+        this.id = Long.valueOf((long) (Math.random() * 1000));
         this.name = name;
         this.surname = surname;
         this.country = country;
         this.biography = biography;
+        this.gender = gender;
     }
 }

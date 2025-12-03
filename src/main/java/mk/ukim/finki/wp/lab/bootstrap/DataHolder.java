@@ -4,6 +4,7 @@ import jakarta.annotation.PostConstruct;
 import mk.ukim.finki.wp.lab.model.Author;
 import mk.ukim.finki.wp.lab.model.Book;
 import mk.ukim.finki.wp.lab.model.BookReservation;
+import mk.ukim.finki.wp.lab.model.enums.Gender;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -23,11 +24,11 @@ public class DataHolder {
         authors = new ArrayList<>();
 
         Author JaneAusten = new Author("Jane", "Austen", "UK",
-                "Jane Austen was an English novelist.");
+                "Jane Austen was an English novelist.", Gender.FEMALE);
         Author JohnTolkien = new Author("John", "Tolkien", "UK",
-                "John Ronald Reuel Tolkien was an English writer and philologist.");
+                "John Ronald Reuel Tolkien was an English writer and philologist.", Gender.MALE);
         Author DanBrown = new Author("Dan", "Brown", "USA",
-                "Daniel Gerhard Brown (born June 22, 1964) is an American writer.");
+                "Daniel Gerhard Brown (born June 22, 1964) is an American writer.", Gender.MALE);
 
         authors.add(JaneAusten);
         authors.add(JohnTolkien);

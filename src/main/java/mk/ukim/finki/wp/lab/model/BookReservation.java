@@ -27,7 +27,7 @@ public class BookReservation {
     private Long numberOfCopies;
 
     public BookReservation(String bookTitle, String readerName, String readerAddress, Long numberOfCopies) {
-        this.id = (long) (Math.random() * 1000);
+        this.id = Long.valueOf((long) (Math.random() * 1000));
         this.bookTitle = bookTitle;
         this.readerName = readerName;
         this.readerAddress = readerAddress;

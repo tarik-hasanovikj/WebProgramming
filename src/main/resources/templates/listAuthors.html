@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Authors</title>
+    <style type="text/css">
+        body {
+            width: 800px;
+            margin: auto;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        .book-option {
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .book-option:hover {
+            background-color: #f5f5f5;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Welcome to our Book Reservation App</h1>
+
+    <a th:href="@{/authors/add-form}" class="btn">+ Add New Author</a>
+</header>
+
+<main>
+    <h2>Authors</h2>
+
+    <div th:each="author : ${authors}" class="book-option">
+        <p th:text="'Name: ' + ${author.name} + ', Surname: ' + ${author.surname} + ', Country: '
+      + ${author.country} + ', Biography: ' + ${author.biography} + ', Gender: ' + ${author.gender.toString()}"></p>
+
+        <div class="actions">
+            <a th:href="@{'/authors/edit-form/' + ${author.id}}" class="btn">Edit</a>
+            <a th:href="@{'/authors/delete/' + ${author.id}}" class="btn">Delete</a>
+            <!--            <button type="submit"-->
+            <!--                    th:formaction="@{'/authors/delete/' + ${author.id}}"-->
+            <!--                    formmethod="post"-->
+            <!--                    class="delete-btn">-->
+            <!--                Delete-->
+            <!--            </button>-->
+        </div>
+    </div>
+</main>
+</body>
+</html>
