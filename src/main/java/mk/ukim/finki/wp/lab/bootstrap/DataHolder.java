@@ -5,6 +5,8 @@ import mk.ukim.finki.wp.lab.model.Author;
 import mk.ukim.finki.wp.lab.model.Book;
 import mk.ukim.finki.wp.lab.model.BookReservation;
 import mk.ukim.finki.wp.lab.model.enums.Gender;
+import mk.ukim.finki.wp.lab.repository.jpa.AuthorRepository;
+import mk.ukim.finki.wp.lab.repository.jpa.BookRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -13,15 +15,20 @@ import java.util.List;
 @Component
 public class DataHolder {
 
-    public static List<Book> books;
-    public static List<BookReservation> reservations;
-    public static List<Author> authors;
+    public static List<Book> books = null;
+    public static List<BookReservation> reservations = null;
+    public static List<Author> authors = null;
+
+    public final BookRepository bookRepository;
+    public final AuthorRepository authorRepository;
+
+    public DataHolder(BookRepository bookRepository, AuthorRepository authorRepository) {
+        this.bookRepository = bookRepository;
+        this.authorRepository = authorRepository;
+    }
 
     @PostConstruct
     public void init() {
-        books = new ArrayList<>();
-        reservations = new ArrayList<>();
-        authors = new ArrayList<>();
 
         Author JaneAusten = new Author("Jane", "Austen", "UK",
                 "Jane Austen was an English novelist.", Gender.FEMALE);
@@ -30,19 +37,19 @@ public class DataHolder {
         Author DanBrown = new Author("Dan", "Brown", "USA",
                 "Daniel Gerhard Brown (born June 22, 1964) is an American writer.", Gender.MALE);
 
-        authors.add(JaneAusten);
-        authors.add(JohnTolkien);
-        authors.add(DanBrown);
+        authorRepository.save(JaneAusten);
+        authorRepository.save(JohnTolkien);
+        authorRepository.save(DanBrown);
 
-        books.add(new Book("To Kill a Mockingbird", "Classic", 4.8, DanBrown));
-        books.add(new Book("1984", "Dystopian", 4.7, DanBrown));
-        books.add(new Book("The Great Gatsby", "Classic", 4.4, JohnTolkien));
-        books.add(new Book("Harry Potter and the Sorcerer's Stone", "Fantasy", 4.9, JohnTolkien));
-        books.add(new Book("The Lord of the Rings", "Fantasy", 4.9, JaneAusten));
-        books.add(new Book("Pride and Prejudice", "Romance", 4.6, JaneAusten));
-        books.add(new Book("The Catcher in the Rye", "Classic", 4.0, JaneAusten));
-        books.add(new Book("The Hobbit", "Fantasy", 4.8, JohnTolkien));
-        books.add(new Book("The Da Vinci Code", "Thriller", 4.3, DanBrown));
-        books.add(new Book("The Alchemist", "Philosophical Fiction", 4.5, DanBrown));
+        bookRepository.save(new Book("To Kill a Mockingbird", "Classic", 4.8, DanBrown));
+        bookRepository.save(new Book("1984", "Dystopian", 4.7, DanBrown));
+        bookRepository.save(new Book("The Great Gatsby", "Classic", 4.4, JohnTolkien));
+        bookRepository.save(new Book("Harry Potter and the Sorcerer's Stone", "Fantasy", 4.9, JohnTolkien));
+        bookRepository.save(new Book("The Lord of the Rings", "Fantasy", 4.9, JaneAusten));
+        bookRepository.save(new Book("Pride and Prejudice", "Romance", 4.6, JaneAusten));
+        bookRepository.save(new Book("The Catcher in the Rye", "Classic", 4.0, JaneAusten));
+        bookRepository.save(new Book("The Hobbit", "Fantasy", 4.8, JohnTolkien));
+        bookRepository.save(new Book("The Da Vinci Code", "Thriller", 4.3, DanBrown));
+        bookRepository.save(new Book("The Alchemist", "Philosophical Fiction", 4.5, DanBrown));
     }
 }

@@ -44,7 +44,7 @@
             <h2>Search books:</h2>
 
             <label>Title contains:</label>
-            <input type="text" name="searchText" th:value="${param.searchText}" placeholder="Enter title keyword">
+            <input type="text" name="title" th:value="${param.title}" placeholder="Enter title keyword">
 
             <label>Minimum rating:</label>
             <input type="number" name="minRating" step="0.1" min="0" max="10" th:value="${param.minRating}"
@@ -74,6 +74,52 @@
                 </button>
             </div>
         </div>
+
+        <!--        <div th:each="book : ${books}" class="book-option">-->
+        <!--            <input type="radio" name="bookId" th:value="${book.id}" required>-->
+        <!--            <span th:text="'Title: ' + ${book.title} + ', Genre: ' + ${book.genre} + ', Rating: '-->
+        <!--      + ${book.averageRating} + ', Author: ' + ${book.author.name} + ' ' + ${book.author.surname}"></span>-->
+
+        <!--            <div class="actions">-->
+        <!--                <a th:href="@{'/books/edit-form/' + ${book.id}}" class="btn">Edit</a>-->
+        <!--                <button type="submit"-->
+        <!--                        th:formaction="@{'/books/delete/' + ${book.id}}"-->
+        <!--                        formmethod="post"-->
+        <!--                        class="delete-btn">-->
+        <!--                    Delete-->
+        <!--                </button>-->
+        <!--            </div>-->
+        <!--        </div>-->
+
+        <!--        <div class="pagination" th:if="${totalPages > 1}">-->
+        <!--            &lt;!&ndash; Previous &ndash;&gt;-->
+        <!--            <a th:if="${currentPage > 0}"-->
+        <!--               th:href="@{/books(page=${currentPage - 1},-->
+        <!--                         searchText=${searchText},-->
+        <!--                         minRating=${minRating})}">-->
+        <!--                Prev-->
+        <!--            </a>-->
+
+        <!--            &lt;!&ndash; Page numbers &ndash;&gt;-->
+        <!--            <span th:each="i : ${#numbers.sequence(0, totalPages - 1)}">-->
+        <!--        <a th:if="${i != currentPage}"-->
+        <!--           th:href="@{/books(page=${i},-->
+        <!--                             searchText=${searchText},-->
+        <!--                             minRating=${minRating})}"-->
+        <!--           th:text="${i + 1}">1</a>-->
+        <!--        <span th:if="${i == currentPage}"-->
+        <!--              th:text="${i + 1}"-->
+        <!--              style="font-weight: bold;"></span>-->
+        <!--    </span>-->
+
+        <!--            &lt;!&ndash; Next &ndash;&gt;-->
+        <!--            <a th:if="${currentPage + 1 < totalPages}"-->
+        <!--               th:href="@{/books(page=${currentPage + 1},-->
+        <!--                         searchText=${searchText},-->
+        <!--                         minRating=${minRating})}">-->
+        <!--                Next-->
+        <!--            </a>-->
+        <!--        </div>-->
 
         <h2>Enter your information:</h2>
         <label>Your Name:</label>

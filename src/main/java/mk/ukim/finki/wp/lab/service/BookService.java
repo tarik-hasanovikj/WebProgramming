@@ -9,7 +9,7 @@ public interface BookService {
 
     List<Book> listAll();
 
-    List<Book> searchBooks(String text, Double rating);
+    List<Book> searchBooks(String title, Double minRating);
 
     Book findById(Long id);
 

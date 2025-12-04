@@ -5,10 +5,13 @@ import mk.ukim.finki.wp.lab.model.Book;
 import mk.ukim.finki.wp.lab.repository.jpa.AuthorRepository;
 import mk.ukim.finki.wp.lab.repository.jpa.BookRepository;
 import mk.ukim.finki.wp.lab.service.BookService;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+
+import static mk.ukim.finki.wp.lab.service.FieldFilterSpecification.*;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -27,8 +30,13 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<Book> searchBooks(String text, Double rating) {
-        return bookRepository.searchBooks(text, rating);
+    public List<Book> searchBooks(String title, Double minRating) {
+        Specification<Book> specification = Specification.allOf(
+                filterContainsText(Book.class, "title", title),
+                greaterThan(Book.class, "averageRating", minRating)
+        );
+
+        return this.bookRepository.findAll(specification);
     }
 
     @Override

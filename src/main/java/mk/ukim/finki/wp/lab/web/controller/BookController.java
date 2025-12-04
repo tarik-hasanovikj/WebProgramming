@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -25,7 +24,7 @@ public class BookController {
     @GetMapping()
     public String getBooksPage(
             @RequestParam(required = false) String error,
-            @RequestParam(required = false) String searchText,
+            @RequestParam(required = false) String title,
             @RequestParam(required = false) Double minRating,
             Model model
     ) {
@@ -33,19 +32,24 @@ public class BookController {
             model.addAttribute("error", error);
         }
 
-        List<Book> books;
+//        List<Book> books;
+//
+//        boolean hasText = (title != null && !title.isBlank());
+//        boolean hasRating = (minRating != null);
+//
+//        if (hasText || hasRating) {
+//            String trimmedText = hasText ? title.trim() : null;
+//            books = bookService.searchBooks(trimmedText, minRating);
+//        } else {
+//            books = bookService.listAll();
+//        }
 
-        boolean hasText = (searchText != null && !searchText.isBlank());
-        boolean hasRating = (minRating != null);
-
-        if (hasText || hasRating) {
-            String trimmedText = hasText ? searchText.trim() : null;
-            books = bookService.searchBooks(trimmedText, minRating);
-        } else {
-            books = bookService.listAll();
-        }
-
+        List<Book> books = bookService.searchBooks(title, minRating);
         model.addAttribute("books", books);
+
+        model.addAttribute("title", title);
+        model.addAttribute("minRating", minRating);
+
         return "listBooks";
     }
 
