@@ -6,6 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import mk.ukim.finki.wp.lab.model.enums.Gender;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @Entity
 @AllArgsConstructor
@@ -27,12 +30,16 @@ public class Author {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
+    @OneToMany(mappedBy = "author")
+    private List<Book> books;
+
     public Author(String name, String surname, String country, String biography, Gender gender) {
-        this.id = Long.valueOf((long) (Math.random() * 1000));
+//        this.id = (long) (Math.random() * 1000);
         this.name = name;
         this.surname = surname;
         this.country = country;
         this.biography = biography;
         this.gender = gender;
+        this.books = new ArrayList<>();
     }
 }

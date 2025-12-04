@@ -1,7 +1,6 @@
-package mk.ukim.finki.wp.lab.repository;
+package mk.ukim.finki.wp.lab.repository.mock;
 
 import mk.ukim.finki.wp.lab.model.Author;
-import mk.ukim.finki.wp.lab.model.Book;
 
 import java.util.List;
 import java.util.Optional;

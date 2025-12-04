@@ -19,4 +19,6 @@ public interface BookService {
 
     void delete(Long id);
 
+    List<Book> findAllByAuthorId(Long authorId);
+
 }

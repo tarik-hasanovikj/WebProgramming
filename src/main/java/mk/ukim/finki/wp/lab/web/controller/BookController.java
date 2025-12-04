@@ -34,8 +34,13 @@ public class BookController {
         }
 
         List<Book> books;
-        if ((searchText != null && !searchText.isEmpty()) || minRating != null) {
-            books = bookService.searchBooks(searchText.trim(), minRating);
+
+        boolean hasText = (searchText != null && !searchText.isBlank());
+        boolean hasRating = (minRating != null);
+
+        if (hasText || hasRating) {
+            String trimmedText = hasText ? searchText.trim() : null;
+            books = bookService.searchBooks(trimmedText, minRating);
         } else {
             books = bookService.listAll();
         }
@@ -43,6 +48,7 @@ public class BookController {
         model.addAttribute("books", books);
         return "listBooks";
     }
+
 
     @GetMapping("/add-form")
     public String addProductPage(Model model) {
@@ -102,6 +108,13 @@ public class BookController {
         model.addAttribute("book", book);
         model.addAttribute("authors", authorService.findAll());
         return "book-form";
+    }
+
+    @GetMapping("/by-author/{authorId}")
+    public String getBooksByAuthor(@PathVariable Long authorId, Model model) {
+        List<Book> books = bookService.findAllByAuthorId(authorId);
+        model.addAttribute("books", books);
+        return "listBooks";
     }
 
 }

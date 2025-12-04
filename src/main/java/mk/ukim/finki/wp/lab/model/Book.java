@@ -25,7 +25,7 @@ public class Book {
     private Author author;
 
     public Book(String title, String genre, double averageRating, Author author) {
-        this.id = Long.valueOf((long) (Math.random() * 1000));
+//        this.id = (long) (Math.random() * 1000);
         this.title = title;
         this.genre = genre;
         this.averageRating = averageRating;
