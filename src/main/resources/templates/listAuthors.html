@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="utf-8">
     <title>Authors</title>
@@ -35,7 +36,9 @@
 <header>
     <h1>Welcome to our Book Reservation App</h1>
 
-    <a th:href="@{/authors/add-form}" class="btn">+ Add New Author</a>
+    <div class="col mb-3" sec:authorize="hasRole('ADMIN')">
+        <a th:href="@{/authors/add-form}" class="btn">+ Add New Author</a>
+    </div>
 </header>
 
 <main>
@@ -46,14 +49,19 @@
       + ${author.country} + ', Biography: ' + ${author.biography} + ', Gender: ' + ${author.gender.toString()}"></p>
 
         <div class="actions">
-            <a th:href="@{'/authors/edit-form/' + ${author.id}}" class="btn">Edit</a>
-            <a th:href="@{'/authors/delete/' + ${author.id}}" class="btn">Delete</a>
-            <!--            <button type="submit"-->
-            <!--                    th:formaction="@{'/authors/delete/' + ${author.id}}"-->
-            <!--                    formmethod="post"-->
-            <!--                    class="delete-btn">-->
-            <!--                Delete-->
-            <!--            </button>-->
+            <th:block sec:authorize="hasRole('ADMIN')">
+                <a th:href="@{'/authors/edit-form/' + ${author.id}}" class="btn">Edit</a>
+                <!--                <a th:href="@{'/authors/delete/' + ${author.id}}" class="btn">Delete</a>-->
+                <form th:action="@{'/authors/delete/' + ${author.id}}" method="post" style="display:inline">
+                    <button type="submit" class="delete-btn">Delete</button>
+                </form>
+                <!--            <button type="submit"-->
+                <!--                    th:formaction="@{'/authors/delete/' + ${author.id}}"-->
+                <!--                    formmethod="post"-->
+                <!--                    class="delete-btn">-->
+                <!--                Delete-->
+                <!--            </button>-->
+            </th:block>
         </div>
     </div>
 </main>

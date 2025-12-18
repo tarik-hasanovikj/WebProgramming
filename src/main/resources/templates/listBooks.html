@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="utf-8">
     <title>Book Reservation - Choose a Book</title>
@@ -34,8 +35,9 @@
 <body>
 <header>
     <h1>Welcome to our Book Reservation App</h1>
-
-    <a th:href="@{/books/add-form}" class="btn">+ Add New Book</a>
+    <div class="col mb-3" sec:authorize="hasRole('ADMIN')">
+        <a th:href="@{/books/add-form}" class="btn">+ Add New Book</a>
+    </div>
 </header>
 
 <main>
@@ -56,71 +58,71 @@
 
     <hr/>
 
-    <form th:action="@{/bookReservation}" method="POST">
-        <h2>Choose a book:</h2>
+    <!--    <form th:action="@{/bookReservation}" method="POST">-->
+    <h2>Choose a book:</h2>
 
-        <div th:each="book : ${books}" class="book-option">
-            <input type="radio" name="bookId" th:value="${book.id}" required>
-            <span th:text="'Title: ' + ${book.title} + ', Genre: ' + ${book.genre} + ', Rating: '
+    <div th:each="book : ${books}" class="book-option">
+        <input type="radio" name="bookId" th:value="${book.id}" required form="reserveForm">
+        <span th:text="'Title: ' + ${book.title} + ', Genre: ' + ${book.genre} + ', Rating: '
       + ${book.averageRating} + ', Author: ' + ${book.author.name} + ' ' + ${book.author.surname}"></span>
 
-            <div class="actions">
+        <div class="actions">
+            <th:block sec:authorize="hasRole('ADMIN')">
                 <a th:href="@{'/books/edit-form/' + ${book.id}}" class="btn">Edit</a>
-                <button type="submit"
-                        th:formaction="@{'/books/delete/' + ${book.id}}"
-                        formmethod="post"
-                        class="delete-btn">
-                    Delete
-                </button>
-            </div>
+                <form th:action="@{'/books/delete/' + ${book.id}}" method="post" style="display:inline">
+                    <button type="submit" class="delete-btn">Delete</button>
+                </form>
+            </th:block>
         </div>
+    </div>
 
-        <!--        <div th:each="book : ${books}" class="book-option">-->
-        <!--            <input type="radio" name="bookId" th:value="${book.id}" required>-->
-        <!--            <span th:text="'Title: ' + ${book.title} + ', Genre: ' + ${book.genre} + ', Rating: '-->
-        <!--      + ${book.averageRating} + ', Author: ' + ${book.author.name} + ' ' + ${book.author.surname}"></span>-->
+    <!--        <div th:each="book : ${books}" class="book-option">-->
+    <!--            <input type="radio" name="bookId" th:value="${book.id}" required>-->
+    <!--            <span th:text="'Title: ' + ${book.title} + ', Genre: ' + ${book.genre} + ', Rating: '-->
+    <!--      + ${book.averageRating} + ', Author: ' + ${book.author.name} + ' ' + ${book.author.surname}"></span>-->
 
-        <!--            <div class="actions">-->
-        <!--                <a th:href="@{'/books/edit-form/' + ${book.id}}" class="btn">Edit</a>-->
-        <!--                <button type="submit"-->
-        <!--                        th:formaction="@{'/books/delete/' + ${book.id}}"-->
-        <!--                        formmethod="post"-->
-        <!--                        class="delete-btn">-->
-        <!--                    Delete-->
-        <!--                </button>-->
-        <!--            </div>-->
-        <!--        </div>-->
+    <!--            <div class="actions">-->
+    <!--                <a th:href="@{'/books/edit-form/' + ${book.id}}" class="btn">Edit</a>-->
+    <!--                <button type="submit"-->
+    <!--                        th:formaction="@{'/books/delete/' + ${book.id}}"-->
+    <!--                        formmethod="post"-->
+    <!--                        class="delete-btn">-->
+    <!--                    Delete-->
+    <!--                </button>-->
+    <!--            </div>-->
+    <!--        </div>-->
 
-        <!--        <div class="pagination" th:if="${totalPages > 1}">-->
-        <!--            &lt;!&ndash; Previous &ndash;&gt;-->
-        <!--            <a th:if="${currentPage > 0}"-->
-        <!--               th:href="@{/books(page=${currentPage - 1},-->
-        <!--                         searchText=${searchText},-->
-        <!--                         minRating=${minRating})}">-->
-        <!--                Prev-->
-        <!--            </a>-->
+    <!--        <div class="pagination" th:if="${totalPages > 1}">-->
+    <!--            &lt;!&ndash; Previous &ndash;&gt;-->
+    <!--            <a th:if="${currentPage > 0}"-->
+    <!--               th:href="@{/books(page=${currentPage - 1},-->
+    <!--                         searchText=${searchText},-->
+    <!--                         minRating=${minRating})}">-->
+    <!--                Prev-->
+    <!--            </a>-->
 
-        <!--            &lt;!&ndash; Page numbers &ndash;&gt;-->
-        <!--            <span th:each="i : ${#numbers.sequence(0, totalPages - 1)}">-->
-        <!--        <a th:if="${i != currentPage}"-->
-        <!--           th:href="@{/books(page=${i},-->
-        <!--                             searchText=${searchText},-->
-        <!--                             minRating=${minRating})}"-->
-        <!--           th:text="${i + 1}">1</a>-->
-        <!--        <span th:if="${i == currentPage}"-->
-        <!--              th:text="${i + 1}"-->
-        <!--              style="font-weight: bold;"></span>-->
-        <!--    </span>-->
+    <!--            &lt;!&ndash; Page numbers &ndash;&gt;-->
+    <!--            <span th:each="i : ${#numbers.sequence(0, totalPages - 1)}">-->
+    <!--        <a th:if="${i != currentPage}"-->
+    <!--           th:href="@{/books(page=${i},-->
+    <!--                             searchText=${searchText},-->
+    <!--                             minRating=${minRating})}"-->
+    <!--           th:text="${i + 1}">1</a>-->
+    <!--        <span th:if="${i == currentPage}"-->
+    <!--              th:text="${i + 1}"-->
+    <!--              style="font-weight: bold;"></span>-->
+    <!--    </span>-->
 
-        <!--            &lt;!&ndash; Next &ndash;&gt;-->
-        <!--            <a th:if="${currentPage + 1 < totalPages}"-->
-        <!--               th:href="@{/books(page=${currentPage + 1},-->
-        <!--                         searchText=${searchText},-->
-        <!--                         minRating=${minRating})}">-->
-        <!--                Next-->
-        <!--            </a>-->
-        <!--        </div>-->
+    <!--            &lt;!&ndash; Next &ndash;&gt;-->
+    <!--            <a th:if="${currentPage + 1 < totalPages}"-->
+    <!--               th:href="@{/books(page=${currentPage + 1},-->
+    <!--                         searchText=${searchText},-->
+    <!--                         minRating=${minRating})}">-->
+    <!--                Next-->
+    <!--            </a>-->
+    <!--        </div>-->
 
+    <form id="reserveForm" th:action="@{/bookReservation}" method="POST">
         <h2>Enter your information:</h2>
         <label>Your Name:</label>
         <input type="text" name="readerName" required><br/>

@@ -1,8 +1,10 @@
 package mk.ukim.finki.wp.lab.web.controller;
 
 import mk.ukim.finki.wp.lab.model.Book;
+import mk.ukim.finki.wp.lab.model.enums.Role;
 import mk.ukim.finki.wp.lab.service.AuthorService;
 import mk.ukim.finki.wp.lab.service.BookService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -53,7 +55,7 @@ public class BookController {
         return "listBooks";
     }
 
-
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping("/add-form")
     public String addProductPage(Model model) {
         model.addAttribute("authors", authorService.findAll());
@@ -71,6 +73,7 @@ public class BookController {
         return "redirect:/books";
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping("/edit-form/{id}")
     public String editBookPage(@PathVariable Long id, Model model) {
         model.addAttribute("book", bookService.findById(id));
@@ -90,18 +93,21 @@ public class BookController {
         return "redirect:/books";
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @PostMapping("/delete/{id}")
     public String deleteBook(@PathVariable Long id) {
         bookService.delete(id);
         return "redirect:/books";
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping("/book-form")
     public String getAddBookPage(Model model) {
         model.addAttribute("authors", authorService.findAll());
         return "book-form";
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping("/book-form/{id}")
     public String getEditBookForm(@PathVariable Long id, Model model) {
         Book book = bookService.findById(id);

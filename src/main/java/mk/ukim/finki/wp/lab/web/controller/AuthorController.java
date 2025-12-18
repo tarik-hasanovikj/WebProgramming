@@ -3,6 +3,7 @@ package mk.ukim.finki.wp.lab.web.controller;
 import mk.ukim.finki.wp.lab.model.Author;
 import mk.ukim.finki.wp.lab.model.enums.Gender;
 import mk.ukim.finki.wp.lab.service.AuthorService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +35,7 @@ public class AuthorController {
         return "listAuthors";
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping("/add-form")
     public String addAuthorPage(Model model) {
         model.addAttribute("genders", List.of(Gender.MALE, Gender.FEMALE));
@@ -53,6 +55,7 @@ public class AuthorController {
         return "redirect:/authors";
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping("/edit-form/{id}")
     public String editAuthorPage(@PathVariable Long id, Model model) {
         model.addAttribute("author", authorService.findById(id));
@@ -73,6 +76,7 @@ public class AuthorController {
         return "redirect:/authors";
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping("/delete/{id}")
     public String deleteAuthor(@PathVariable Long id) {
         authorService.delete(id);
